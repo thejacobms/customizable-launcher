@@ -51,7 +51,17 @@ import java.net.URI;
             Website website = (Website) program;
             launchButton.addActionListener(e -> {
 
-                URI uri = URI.create(website.getURL());
+                String url = website.getURL();
+
+                boolean startsWith = url.startsWith("http://") || url.startsWith("https://");
+                if (!startsWith) {
+
+                    System.out.println(url + " does not start with http:// or https://.");
+                    url = "http://" + url;
+                    System.out.println(url);
+                }
+
+                URI uri = URI.create(url);
 
                 try {
 

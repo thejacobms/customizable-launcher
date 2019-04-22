@@ -101,11 +101,6 @@ class AddNewProgramPanel extends JPanel {
                     JOptionPane.showMessageDialog(mainPanel, "Please fill out the fields");
                 } else {
 
-                    if (!url.startsWith("http://") || !url.startsWith("https://")) {
-
-                        url = "http://" + url;
-                    }
-
                     new Website(name, description, url);
 
                     nameTextArea.setText("");
@@ -178,10 +173,10 @@ class AddNewProgramPanel extends JPanel {
 
                     int end = name.indexOf(".exe");
                     name = name.substring(0, end);
-                }
 
-                nameTextArea.setText(name);
-                filePathTextArea.setText(file);
+                    nameTextArea.setText(name);
+                    filePathTextArea.setText(file);
+                }
             });
             findFileButton.setPreferredSize(ComponentsProperties.ADD_NEW_PROGRAM_PANEL_DEFAULT_COMPONENT_SIZE);
             findFileButton.setBackground(ComponentsProperties.BUTTON_COLOR);

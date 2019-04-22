@@ -123,21 +123,10 @@ class EditProgramFrame extends JFrame {
                     JOptionPane.showMessageDialog(panel, "Please fill out the fields.");
                 } else {
 
-                    System.out.println(url);
-
-                    if (!url.startsWith("http://") || !url.startsWith("https://")) {
-
-                        url = "http://" + url;
-                    }
-
-                    System.out.println(url);
-
                     Website oldWebsite = (Website) program;
                     Website newWebsite = new Website(name, description, url, false);
                     DataManagement.replaceProgramInProgramArrayList(oldWebsite, newWebsite);
                     Main.launcherFrame.addIconsToIconPanel();
-
-
                 }
             });
             button.setBackground(ComponentsProperties.BUTTON_COLOR);
@@ -148,18 +137,24 @@ class EditProgramFrame extends JFrame {
         // Game submit button and file button
         if (program instanceof Game) {
 
-            button = new JButton("Submit");
+            button = new JButton("Find File");
+            final FileDialog fileDialog = new FileDialog(new JFrame());
+
             button.addActionListener(e -> {
 
-                final FileDialog fileDialog = new FileDialog(new JFrame());
-                String directory = fileDialog.getDirectory();
-                String file = fileDialog.getFile();
-                int indexOfExe = file.indexOf(".exe");
-                String name = file.substring(0, indexOfExe);
+                fileDialog.setVisible(true);
 
-                nameTextArea.setText(name);
-                filePathTextArea.setText(directory + file);
+                String file = fileDialog.getDirectory() + fileDialog.getFile();
+                String name = fileDialog.getFile();
 
+                if (name != null && name.endsWith(".exe")) {
+
+                    int end = name.indexOf(".exe");
+                    name = name.substring(0, end);
+
+                    nameTextArea.setText(name);
+                    filePathTextArea.setText(file);
+                }
             });
             button.setBackground(ComponentsProperties.BUTTON_COLOR);
             button.setPreferredSize(ComponentsProperties.ADD_NEW_PROGRAM_PANEL_DEFAULT_COMPONENT_SIZE);
